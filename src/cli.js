@@ -58,15 +58,17 @@ function processaArquivo(texto,destino){
 //     }
 // }
 
-function criaESalvaArquivo(listaPalavras, endereco){
+function criaESalvaArquivo(listaPalavras, endereco) {
     const arquivoNovo = `${endereco}/resultado.txt`;
     const textoPalavras = montaSaidaArquivo(listaPalavras);
-    fs.promises.writeFile(arquivoNovo, textoPalavras).then(() => {
+
+    fs.promises.mkdir(endereco, { recursive: true }).then(() => {
+        return fs.promises.writeFile(arquivoNovo, textoPalavras);
+    }).then(() => {
         console.log('arquivo criado');
-    }).catch((erro) =>{
-        throw erro
+    }).catch((erro) => {
+        throw erro;
     }).finally(() => {
-        console.log('operação finalizada')
-    })
-        
+        console.log('operação finalizada');
+    });
 }
